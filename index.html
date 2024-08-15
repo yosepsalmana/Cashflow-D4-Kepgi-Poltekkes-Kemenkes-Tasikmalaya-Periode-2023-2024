@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Project : Cashflow D4 Keperawatan Gigi Poltekkes Kemenkes Tasikmalaya 2023/2024</title>
+</head>
+<body style="padding-top: 10px; padding-left: 40px; padding-right: 40px; padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;">
+    <h2>Personal Project : Cashflow D4 Keperawatan Gigi Poltekkes Kemenkes Tasikmalaya 2023/2024</h2>
+    <hr>
+
+    <h3>Introduction</h3>
+    <hr>
+    <p>Given a dataset containing financial information for the D4 Dental Nursing Program at the Health Polytechnic of the Ministry of Health in Tasikmalaya. 
+       There are two separate files containing information about various payments and expenditures from July 2023 to July 2024.</p>
+    
+    <h3>1. Ask</h3>
+    <hr>
+    <h4>1.1 Objectives</h4>
+    <ul>
+        <li>How to show the <b>total income</b>, <b>expenses</b>, and <b>current balance</b> current balance (range <b>July 2023 – July 2024</b>)</li>
+        <li>Identify the <b>students</b> who <b>have not paid</b> the cash fund, and specify how many months and in which months they have missed the payments.</li>
+    </ul>
+    <h4>1.2 Task</h4>
+    <p>Create some visualizations or dashboard with the best type of chart.</p>
+
+    <h3>2. Prepare</h3>
+    <hr>
+    <p>I was given data in Google Spreadsheet with two separate files. The first file contains financial transactions from July to December 2023, and the second file contains financial transactions from January to July 2024. First, I need to download both datasets. The data is stored in .xlsx format.
+        <br>
+        <br>
+        <b>First Dataset: KEUANGAN D4 KEPGI 2023.xlsx <br></b>
+           In the original 2023 Financial Transactions dataset, there are 5 worksheets:
+        
+        <ul>
+            <li>History Respon</li>
+            <p>This sheet contains data from Google Form responses by students when making payment transactions.</p>
+            <li>MPLS</li>
+            <p>This sheet contains data on students who made payments for MPLS. <br>
+               There are 3 columns: Nama Mahasiswa, Tanggal Pembayaran, Jumlah.</p>
+            <li>Kas Semester 1</li>
+            <p>Contains data on students' cash payments. <br>
+               There are 8 columns: NIM, Nama Mahasiswa, Jul-23, Aug-23, Sep-23, Oct-23, Nov-23, Dec-23.</p>
+            <li>Pemasukan</li>
+            <p>Contains other income data besides cash payments. <br>
+               There are 7 columns: NIM, Nama Mahasiswa, Pembayaran Buku, Pembayaran Makan, Pembayaran Batik, Pembayaran Praktek, Total.</p>
+            <li>Pengeluaran</li>
+            <p>There are 8 columns: Tanggal Pengeluaran, Keterangan, Qty, Harga, Jumlah, Ongkos Kirim, Total Pembayaran, Total Pengeluaran.</p>
+        </ul>
+
+        <b>Second Dataset: KEUANGAN D4 KEPGI 2024.xlsx <br></b>
+        In the original 2024 Financial Transactions dataset, there are 3 worksheets:
+        <br>
+        <ul>
+            <li>Kas 2024</li>
+            <p> Contains data on students' cash payments. <br>
+                There are 14 columns: Student ID, Student Name, Jan-24, Feb-24, Mar-24, Apr-24, May-24, Jun-24, Jul-24, Aug-24, Sep-24, Oct-24, Nov-24, Dec-24.</p>
+            <li>Pembayaran Buku 2024</li>
+            <p>There are 3 columns: Student ID, Student, Payment Amount.</p>
+            <li>Pengeluaran</li>
+            <p>There are 4 columns: Date, Month, Expenditure Name, Amount.</p>
+        </ul>
+
+        <h3>3. Process</h3>
+        <hr>
+        To achieve the objectives, I applied several techniques during the data preprocessing stage for this dataset. In this case, I aimed to consolidate the data into two worksheets within a single file: one for income and one for expenses. The following steps were taken to ensure that the data used is relevant, allowing for the creation of visualizations that meet the specific needs.        <ol>
+            <li><h4>Removing unnecessary columns</h4></li>
+            Cleaning the dataset by dropping columns that are not needed for the analysis. This helps in reducing the complexity and improving the efficiency of the data processing.
+            <li><h4>Filling the null (blankspaces) with values (zero)</h4></li>
+            Handling missing data by filling in the blank spaces with zeros. This is important to ensure that the analysis does not encounter errors due to missing values.
+            <li><h4>Changing the tanggal column into date format</h4></li>
+            Converting the data type of the 'tanggal' (date) column to a proper date format.
+            <li><h4>Merging the kas_2023 table with the kas_2024 table and combining all the data that represents income</h4></li>
+            Combining data from two different tables (kas_2023 and kas_2024) into a single dataset and ensuring that only the relevant data (income) is included. This helps in consolidating data for comprehensive analysis.
+            <li><h4>Transforming the table from wide format to long format</h4></li>
+            Reshaping the data from a wide format, where each variable is in a separate column, to a long format, where each observation is in a separate row.
+            <li><h4>Merging kas and income that are already in long format </h4></li>
+            Combining two datasets that are both in long format, ensuring that the data is consolidated and ready for analysis.
+            <br>
+            <br>
+            <br>
+            <div style="font-size: 14px;"><b><i>*Performing the same steps for the expense table.</i></b></div>
+
+        </ol>
+
+        <br>
+        <br>
+        After completing all the steps, a file named final_cleaned_data.xlsx was created, containing the data ready for use. This file includes two tables: the income table and the expense table. <br>
+        Below are the details of the data types for each table. <br><br>
+
+        <b>Income Table :</b>
+
+       <table>
+        <tr>
+            <td><b>#</b></td>
+            <td><b>Field</b></td>
+            <td><b>Data Type</b></td>
+        </tr>
+        <tr>
+            <td>1.</td>
+            <td>NIM</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td>Nama Mahasiswa</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td>Tanggal</td>
+            <td>DATE</td>
+        </tr>
+        <tr>
+            <td>4.</td>
+            <td>Bulan</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>5.</td>
+            <td>Tahun</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>6.</td>
+            <td>Kategori</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>7.</td>
+            <td>Jumlah</td>
+            <td>INT</td>
+        </tr>
+       </table>
+       <br>
+       <br>
+
+       <b>Expense Table :</b>
+
+       <table>
+        <tr>
+            <td><b>#</b></td>
+            <td><b>Field</b></td>
+            <td><b>Data Type</b></td>
+        </tr>
+        <tr>
+            <td>1.</td>
+            <td>Tanggal</td>
+            <td>DATE</td>
+        </tr>
+        <tr>
+            <td>2.</td>
+            <td>Bulan</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>3.</td>
+            <td>Tahun</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>4.</td>
+            <td>Keterangan</td>
+            <td>STRING</td>
+        </tr>
+        <tr>
+            <td>5.</td>
+            <td>Jumlah</td>
+            <td>INT</td>
+        </tr>
+       </table>
+       <br>
+
+    <h3>4. Analyze</h3>
+    <hr>
+    In the analysis process, I attempted to use MySQL Workbench and also created visualizations with Tableau. 
+    <br>
+    <br>
+    <h4>4.1 Show total income, total expenses, and remaining balance</h4>
+    Here is the query to answer the first question, which displays the total income, total expenses, and remaining balance.
+    <br>
+    <br>
+    <div>
+        <img src="assets/query_no.1.png" alt="">
+    </div>
+    <br>
+    Explanation :
+    <ul>
+        <li>Subquery for Income (jumlah_pemasukan): The first Common Table Expression (CTE) named <b>jumlah_pemasukan</b> calculates the total income by summing up the jumlah column from the pemasukan table.</li>
+        <li>Subquery for Expenses (jumlah_pengeluaran): The second CTE named <b>jumlah_pengeluaran</b> calculates the total expenses by summing up the jumlah column from the pengeluaran table.
+        </li>
+    </ul>
+    Final Select Statement:
+    <ul>
+        <li><b>p.total_pemasukan</b> represents the total income.</li>
+        <li><b>g.total_pengeluaran</b> represents the total expenses.</li>
+        <li>The difference between total income and total expenses <b>(p.total_pemasukan - g.total_pengeluaran)</b> is calculated as <b>sisa_saldo</b>, which represents the remaining balance.</li>
+    </ul>
+    <br>
+    This is the output :
+    <br>
+    <img src="assets/query_output_no_1.png" alt="">
+    <br><br>
+    <h4>4.1 Students who have not paid the cash fund</h4>
+    <br>
+    To find the students who have not paid the cash fund, we first need to determine how many students have not made their payments in a specific month and year. 
+    <br>
+    Here is the query to display that information:
+    <br>
+    <br>
+    <img src="assets/query_blmbyr_jumlah.png" alt="">
+    <br>
+    <br>
+    Explanation :
+    <ul>
+        <li>SELECT bulan and tahun: The query selects the month (bulan) and year (tahun) to group the data by these time periods.</li>
+        <li>COUNT(nama_mahasiswa) AS jumlah_belum_bayar: This counts the number of students (nama_mahasiswa) who haven't made their payment. The result is aliased as jumlah_belum_bayar to indicate the total number of unpaid students for each month and year.</li>
+        <li>WHERE kategori = "kas" AND jumlah = 0: Filters the data to include only those records where the payment category is "kas" and the payment amount (jumlah) is zero, meaning the students haven't paid.</li>
+        <li>GROUP BY bulan, tahun: Groups the results by both the month and the year, so that the query can count the number of unpaid students for each specific period.</li>
+        <li>ORDER BY jumlah_belum_bayar DESC: Orders the results in descending order based on the number of students who haven't paid, with the months/years where the most students are behind on payments appearing first.</li>
+    </ul>
+    <br>
+    This is the output :
+    <br>
+    <img src="assets/output_blmbyr_jumlah.png" alt="">
+    <br><br>
+    Based on the results, there are students who haven't paid their dues from January to July 2024. Since this issue only occurs in 2024, I decided to display the students, the number of months they haven't paid, and the specific months they missed. The list is ordered by the students who have the most unpaid.
+    <br><br>
+    Here is the query to display that information:
+    <br><br>
+    <img src="assets/query_no_2.png" alt="">
+    <br><br>
+    Explanation :
+    <br>
+    <ul>
+        <li>nama_mahasiswa: Selects the names of the students.</li>
+        <li>COUNT(nama_mahasiswa) AS jumlah_belum_bayar: Counts the number of months each student hasn't paid, and the result is labeled as jumlah_belum_bayar.</li>
+        <li>GROUP_CONCAT(bulan ORDER BY FIELD(bulan, 'January', 'February', 'March', 'April', 'May', 'June', 'July') SEPARATOR ', ') AS bulan: Compiles a list of months in which each student hasn't paid, ordered from January to July, and combines them into a single string separated by commas.        </li>
+        <li>WHERE kategori = "kas" AND jumlah = 0: Filters the results to include only those records where the payment category is "kas" and the payment amount is zero, indicating non-payment.</li>
+        <li>GROUP BY nama_mahasiswa: Groups the data by student name, so the query can calculate the total unpaid months for each student.</li>
+        <li>ORDER BY jumlah_belum_bayar DESC: Orders the results in descending order based on the number of unpaid months, showing students with the most unpaid months first.</li>
+    </ul>
+    <br>
+    This is the output :
+    <br><br>
+    <img src="assets/output_no_2.png" alt="">
+    <br><br>
+    <blockquote>
+        <strong>SUMMARIES</strong>
+        <br>
+        <ol>
+            <li>Based on the data summary from July 2023 to July 2024 :</li>
+            <ul>
+                <li>Total Income: Rp88.317.000</li>
+                <li>Total Expenses: Rp77.450.700</li>
+                <li>Remaining Balance: Rp10.866.300</li>
+            </ul>
+            <br>
+            <li>There are students who haven't paid their cash fund from January until July 2024. Here is the number of students who haven't paid, categorized by month :</li>
+            <ul>
+                <li>January : 4 students</li>
+                <li>February : 8 students</li>
+                <li>March : 11 students</li>
+                <li>April : 16 students</li>
+                <li>May : 34 students</li>
+                <li>June : 37 students</li>
+                <li>July : 39 students</li>
+            </ul>
+        </ol>
+        
+    </blockquote>
+    
+    <h3>5. Share</h3>
+    I made the visualization with Tableau. The content can filter the student who dont paid the cash fund by month and year. This is the result :
+    <br>
+    <br>
+    <img src="assets/Dashboard.png" height="500px" style="margin-left: auto; margin-right: auto; display: block;">
+
+    <br>
+    If we change the month or year "Jumlah", "Belum Bayar" and "List Mahasiswa Belum Bayar" will change according to the data.
+
+    </p>
+
+
+
+</body>
+</html>
